@@ -1,41 +1,36 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Clé API directe
-const genAI = new GoogleGenerativeAI("AIzaSyDD7EyLk-vSXInKE2rkIbbyCCjafuq1kOU");
+// On s'assure que la clé est bien lue
+const API_KEY = "AIzaSyDD7EyLk-vSXInKE2rkIbbyCCjafuq1kOU";
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 export async function POST(req: Request) {
   try {
     const { sourceLang, targetLang, time } = await req.json();
+
+    // Utilisation du modèle flash (le plus rapide et stable)
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
-    const prompt = `Crée un plan de survie pour un voyageur parlant ${sourceLang} allant dans un pays parlant ${targetLang} (${time}).
-    Retourne UNIQUEMENT un objet JSON valide. Pas de texte avant, pas de texte après.
-    Structure : {"planTitle": "...", "days": [{"title": "...", "phrases": [{"original": "...", "translated": "...", "pronunciation": "..."}]}]}`;
+    const prompt = `Génère un plan de survie pour un voyageur. 
+    Source: ${sourceLang}, Destination: ${targetLang}, Temps: ${time}.
+    Réponds uniquement avec ce JSON :
+    {"planTitle": "Voyage en ${targetLang}", "days": [{"title": "Jour 1", "phrases": [{"original": "Bonjour", "translated": "Hello", "pronunciation": "Hélo"}]}]}`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    let text = response.text().trim();
+    let text = response.text();
 
-    // 🛡️ NETTOYAGE FORCE : Supprime les balises ```json et ``` si elles existent
-    text = text.replace(/^```json/gm, "").replace(/^```/gm, "").trim();
-
-    // On vérifie si c'est bien du JSON avant d'envoyer
-    try {
-      JSON.parse(text);
-    } catch (e) {
-      // Si l'IA a quand même mis du texte, on cherche les accolades
-      const start = text.indexOf('{');
-      const end = text.lastIndexOf('}') + 1;
-      text = text.substring(start, end);
-    }
+    // Nettoyage manuel si l'IA ajoute du texte
+    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
 
     return new Response(text, {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });
-  } catch (error) {
-    console.error("Erreur Serveur:", error);
-    return new Response(JSON.stringify({ error: "L'IA a fait une erreur interne" }), { 
+  } catch (error: any) {
+    // On affiche l'erreur précise dans les logs Vercel
+    console.error("Détail Erreur Google:", error.message);
+    return new Response(JSON.stringify({ error: error.message }), { 
       status: 500,
       headers: { "Content-Type": "application/json" }
     });
