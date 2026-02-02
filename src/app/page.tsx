@@ -1,53 +1,37 @@
 "use client";
 import { useState } from 'react';
 
-// Liste des langues supportées
 const languages = [
   { name: "Français", code: "Français" },
   { name: "Anglais", code: "Anglais" },
   { name: "Espagnol", code: "Espagnol" },
   { name: "Italien", code: "Italien" },
-  { name: "Allemand", code: "Allemand" },
   { name: "Japonais", code: "Japonais" },
   { name: "Portugais", code: "Portugais" },
-  { name: "Chinois", code: "Chinois" },
-  { name: "Arabe", code: "Arabe" },
-  { name: "Russe", code: "Russe" },
-  { name: "Coréen", code: "Coréen" },
-  { name: "Néerlandais", code: "Néerlandais" },
   { name: "Grec", code: "Grec" },
-  { name: "Thaï", code: "Thaï" }
+  { name: "Thaï", code: "Thaï" },
+  { name: "Arabe", code: "Arabe" }
 ].sort((a, b) => a.name.localeCompare(a.name));
-
-const popularDestinations = [
-  { name: "Espagne", lang: "Espagnol", flag: "🇪🇸" },
-  { name: "Italie", lang: "Italien", flag: "🇮🇹" },
-  { name: "Japon", lang: "Japonais", flag: "🇯🇵" },
-  { name: "Angleterre", lang: "Anglais", flag: "🇬🇧" },
-  { name: "Thaïlande", lang: "Thaï", flag: "🇹🇭" },
-  { name: "Corée", lang: "Coréen", flag: "🇰🇷" },
-];
 
 export default function Triptalk() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<any>(null);
-  const [targetLang, setTargetLang] = useState("Anglais");
-  const [sourceLang, setSourceLang] = useState("Français");
 
   const generatePlan = async (e: any) => {
     e.preventDefault();
     setLoading(true);
+    const formData = new FormData(e.target);
     
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sourceLang, targetLang, time: e.target.time.value }),
+        body: JSON.stringify(Object.fromEntries(formData)),
       });
       const data = await res.json();
       setPlan(data);
     } catch (err) {
-      alert("Erreur de connexion avec l'IA.");
+      alert("Petit bug sous les cocotiers... Réessaie !");
     }
     setLoading(false);
   };
@@ -58,95 +42,106 @@ export default function Triptalk() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f8fafc] p-4 md:p-8 font-sans text-slate-900">
-      <div className="max-w-2xl mx-auto text-center">
-        <h1 className="text-5xl font-black text-blue-600 tracking-tight mb-2 italic">Triptalk</h1>
-        <p className="text-slate-500 mb-8 font-medium">L'essentiel pour survivre à l'étranger.</p>
+    <main className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-sky-100 p-6 md:p-12 font-sans selection:bg-orange-200">
+      <div className="max-w-xl mx-auto">
+        
+        {/* Header Good Vibe */}
+        <header className="text-center mb-10 animate-in fade-in zoom-in duration-1000">
+          <span className="inline-block px-4 py-1 bg-white/50 backdrop-blur-sm rounded-full text-orange-600 text-xs font-black uppercase tracking-widest mb-4 shadow-sm">
+            ☀️ Ready for take off?
+          </span>
+          <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-600 tracking-tighter mb-2">
+            Triptalk
+          </h1>
+          <p className="text-sky-800/60 font-medium italic">Ton kit de survie pour briller en vacances 🌴</p>
+        </header>
 
         {!plan ? (
-          <div className="space-y-8 animate-in fade-in duration-700">
-            {/* Boutons Rapides */}
-            <div className="flex flex-wrap justify-center gap-2">
-              {popularDestinations.map((dest) => (
-                <button
-                  key={dest.name}
-                  onClick={() => setTargetLang(dest.lang)}
-                  type="button"
-                  className={`px-4 py-2 rounded-full border-2 transition-all text-sm font-bold ${
-                    targetLang === dest.lang ? "border-blue-600 bg-blue-50 text-blue-600" : "border-slate-200 bg-white"
-                  }`}
-                >
-                  {dest.flag} {dest.name}
-                </button>
-              ))}
+          <form onSubmit={generatePlan} className="bg-white/80 backdrop-blur-xl p-8 rounded-[3rem] shadow-2xl shadow-orange-200/50 space-y-8 border border-white animate-in slide-in-from-bottom-8 duration-700">
+            
+            <div className="space-y-6">
+              <div className="relative group">
+                <label className="text-sm font-black text-orange-400 ml-4 mb-2 block uppercase tracking-tighter">Je parle</label>
+                <select name="sourceLang" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-orange-300 focus:ring-0 shadow-inner text-slate-700 font-bold transition-all appearance-none cursor-pointer">
+                  {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
+                </select>
+                <div className="absolute right-5 bottom-5 pointer-events-none text-orange-300">▼</div>
+              </div>
+
+              <div className="relative group">
+                <label className="text-sm font-black text-sky-400 ml-4 mb-2 block uppercase tracking-tighter">Destination (Langue)</label>
+                <select name="targetLang" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-sky-300 focus:ring-0 shadow-inner text-slate-700 font-bold transition-all appearance-none cursor-pointer">
+                  {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
+                </select>
+                <div className="absolute right-5 bottom-5 pointer-events-none text-sky-300">▼</div>
+              </div>
+
+              <div className="relative group">
+                <label className="text-sm font-black text-amber-400 ml-4 mb-2 block uppercase tracking-tighter">On décolle quand ?</label>
+                <select name="time" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-amber-300 focus:ring-0 shadow-inner text-slate-700 font-bold transition-all appearance-none cursor-pointer">
+                  <option value="24 heures">🚀 Demain (Mode Panique !)</option>
+                  <option value="1 semaine">📅 Dans 1 semaine</option>
+                  <option value="1 mois">⏳ On a le temps</option>
+                </select>
+                <div className="absolute right-5 bottom-5 pointer-events-none text-amber-300">▼</div>
+              </div>
             </div>
 
-            {/* Formulaire avec Menus Déroulants */}
-            <form onSubmit={generatePlan} className="bg-white p-8 rounded-[2.5rem] shadow-2xl space-y-6 border border-slate-100 text-left">
-              
-              <div>
-                <label className="text-xs font-black uppercase text-slate-400 ml-2">Je parle</label>
-                <select 
-                  value={sourceLang} 
-                  onChange={(e) => setSourceLang(e.target.value)}
-                  className="w-full p-4 mt-1 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 font-bold"
-                >
-                  {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-xs font-black uppercase text-slate-400 ml-2">Je veux apprendre</label>
-                <select 
-                  value={targetLang} 
-                  onChange={(e) => setTargetLang(e.target.value)}
-                  className="w-full p-4 mt-1 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 font-bold text-blue-600"
-                >
-                  {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-xs font-black uppercase text-slate-400 ml-2">Départ prévu</label>
-                <select name="time" className="w-full p-4 mt-1 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 font-medium">
-                  <option value="24 heures">🚨 Demain (Urgence)</option>
-                  <option value="1 semaine">📅 Dans 1 semaine</option>
-                  <option value="1 mois">⏳ Dans 1 mois</option>
-                </select>
-              </div>
-
-              <button 
-                disabled={loading} 
-                className="w-full bg-blue-600 text-white py-5 rounded-2xl font-black text-xl shadow-lg hover:bg-blue-700 transition-all disabled:opacity-50"
-              >
-                {loading ? "Préparation du voyage..." : "GÉNÉRER MON GUIDE"}
-              </button>
-            </form>
-          </div>
+            <button 
+              disabled={loading} 
+              className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-6 rounded-2xl font-black text-xl shadow-xl shadow-orange-200 hover:shadow-orange-300 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+            >
+              {loading ? "On prépare tes valises... ✈️" : "C'EST PARTI ! 🥥"}
+            </button>
+          </form>
         ) : (
-          <div className="space-y-6 animate-in slide-in-from-bottom-10 duration-500 text-left">
-            <button onClick={() => setPlan(null)} className="font-bold text-blue-600 underline">← Nouveau voyage</button>
-            <h2 className="text-3xl font-black text-slate-800">{plan.planTitle}</h2>
+          <div className="space-y-8 animate-in slide-in-from-bottom-12 duration-700">
+            <button onClick={() => setPlan(null)} className="flex items-center gap-2 font-black text-sky-600 hover:text-sky-700 transition mx-auto bg-sky-50 px-6 py-2 rounded-full shadow-sm">
+              ← Changer de voyage
+            </button>
             
-            {plan.days?.map((day: any, i: number) => (
-              <div key={i} className="bg-white p-6 rounded-[2rem] shadow-lg border border-slate-100">
-                <h3 className="text-blue-600 font-black text-xl mb-4 italic underline">{day.title}</h3>
-                <div className="space-y-4">
-                  {day.phrases.map((p: any, j: number) => (
-                    <div key={j} className="flex justify-between items-center p-4 bg-slate-50 rounded-2xl group">
-                      <div>
-                        <p className="font-bold text-lg">{p.translated}</p>
-                        <p className="text-slate-500 text-sm">Prononciation : <span className="text-blue-500">{p.pronunciation}</span></p>
+            <h2 className="text-4xl font-black text-slate-800 text-center leading-tight">
+               {plan.planTitle}
+            </h2>
+            
+            <div className="grid gap-8">
+              {plan.days?.map((day: any, i: number) => (
+                <div key={i} className="bg-white/90 backdrop-blur-md p-8 rounded-[2.5rem] shadow-xl border border-white">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="text-4xl">🍹</span>
+                    <h3 className="text-2xl font-black text-orange-500 uppercase tracking-tighter italic border-b-4 border-orange-100">{day.title}</h3>
+                  </div>
+                  
+                  <div className="space-y-5">
+                    {day.phrases.map((p: any, j: number) => (
+                      <div key={j} className="flex justify-between items-center p-5 bg-gradient-to-r from-slate-50 to-white rounded-3xl border border-slate-100 group hover:shadow-md transition-all">
+                        <div className="flex-1">
+                          <p className="font-black text-xl text-slate-800 mb-1">{p.translated}</p>
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 bg-sky-100 text-sky-600 text-[10px] font-black rounded uppercase">Prononcer</span>
+                            <p className="text-sky-500 font-bold text-sm italic">{p.pronunciation}</p>
+                          </div>
+                          <p className="text-slate-300 text-xs mt-1 font-medium italic">({p.original})</p>
+                        </div>
+                        <button 
+                          onClick={() => speak(p.translated)} 
+                          className="ml-4 bg-orange-100 hover:bg-orange-200 text-orange-600 p-4 rounded-2xl shadow-inner transition-transform active:scale-90"
+                        >
+                          <span className="text-2xl">🔊</span>
+                        </button>
                       </div>
-                      <button onClick={() => speak(p.translated)} className="bg-white p-3 rounded-xl shadow-sm text-2xl group-active:scale-90 transition">🔊</button>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </div>
+      
+      <footer className="mt-12 text-center text-sky-900/30 text-xs font-bold uppercase tracking-widest">
+        Made with ☀️ for u
+      </footer>
     </main>
   );
 }
