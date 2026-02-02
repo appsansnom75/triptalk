@@ -53,6 +53,7 @@ const survivalData: Record<string, any> = {
       { fr: "J'ai une réservation", tr: "I have a reservation", ph: "Aï hav ey réserva-cheun" },
       { fr: "Le code Wi-Fi ?", tr: "The Wi-Fi password?", ph: "Ze waï-faï pass-weurd" },
       { fr: "Petit-déjeuner", tr: "Breakfast", ph: "Breuk-feust" },
+      { fr: "Serviettes propres", tr: "Clean towels", ph: "Kline taou-els" },
       { fr: "À quelle heure est le check-out ?", tr: "What time is check-out?", ph: "Wote taïme iz tchek-aout" }
     ],
     shopping: [
@@ -65,7 +66,8 @@ const survivalData: Record<string, any> = {
       { fr: "Aidez-moi !", tr: "Help me!", ph: "Helpe mi" },
       { fr: "Où est l'hôpital ?", tr: "Where is the hospital?", ph: "Wère iz ze ospital" },
       { fr: "J'ai perdu mon passeport", tr: "I lost my passport", ph: "Aï lost maï pass-port" },
-      { fr: "Appelez la police", tr: "Call the police", ph: "Col ze poliss" }
+      { fr: "Appelez la police", tr: "Call the police", ph: "Col ze poliss" },
+      { fr: "Je suis malade", tr: "I am sick", ph: "Aïe am sik" }
     ]
   },
   "es": {
@@ -83,14 +85,16 @@ const survivalData: Record<string, any> = {
       { fr: "La gare", tr: "La estación", ph: "La essta-ssion" },
       { fr: "Tout droit", tr: "Todo recto", ph: "Todo rek-to" },
       { fr: "À gauche / À droite", tr: "Izquierda / Derecha", ph: "Iss-ki-erda / dé-rétcha" },
-      { fr: "Un billet s'il vous plaît", tr: "Un billete por favor", ph: "Oun biyété por fabor" }
+      { fr: "Un billet s'il vous plaît", tr: "Un billete por favor", ph: "Oun biyété por fabor" },
+      { fr: "Où sont les toilettes ?", tr: "¿Dónde están los baños?", ph: "Donndé esstane loss bagnoss" }
     ],
     food: [
       { fr: "L'addition s'il vous plaît", tr: "La cuenta por favor", ph: "La kouennta por fabor" },
       { fr: "Une table pour deux", tr: "Una mesa para dos", ph: "Ouna messa para doss" },
       { fr: "Une bière s'il vous plaît", tr: "Una cerveza por favor", ph: "Ouna ser-vessa por fabor" },
       { fr: "C'est délicieux", tr: "Está muy rico", ph: "Essta mouy riko" },
-      { fr: "Santé !", tr: "¡Salud!", ph: "Salou-de" }
+      { fr: "Santé !", tr: "¡Salud!", ph: "Salou-de" },
+      { fr: "Sin picante", tr: "Sans piment", ph: "Sine pikanté" }
     ],
     hotel: [
       { fr: "J'ai une réservation", tr: "Tengo una reserva", ph: "Tenngo ouna réserva" },
@@ -105,85 +109,104 @@ const survivalData: Record<string, any> = {
     emergency: [
       { fr: "Aidez-moi", tr: "Ayúdeme", ph: "Ayoudémé" },
       { fr: "Hôpital", tr: "Hospital", ph: "O-spital" },
-      { fr: "Au secours !", tr: "¡Socorro!", ph: "Sokorro" }
+      { fr: "Au secours !", tr: "¡Socorro!", ph: "Sokorro" },
+      { fr: "Police", tr: "Policía", ph: "Polissia" }
     ]
   },
   "it": {
     essentials: [
       { fr: "Bonjour", tr: "Buongiorno", ph: "Bouone-djor-no" },
-      { fr: "Merci", tr: "Grazie", ph: "Grat-sié" },
+      { fr: "Salut / Ciao", tr: "Ciao", ph: "Tchao" },
+      { fr: "Merci beaucoup", tr: "Grazie mille", ph: "Grat-sié mil-lé" },
       { fr: "S'il vous plaît", tr: "Per favore", ph: "Per favoré" },
-      { fr: "Pardon", tr: "Scusi", ph: "Skou-zi" }
+      { fr: "Comment ça va ?", tr: "Come sta?", ph: "Komé essta" }
     ],
     transport: [
       { fr: "Où est le taxi ?", tr: "Dov'è il taxi?", ph: "Dov-è il taksi" },
-      { fr: "La gare", tr: "La stazione", ph: "La stat-si-oné" }
+      { fr: "La gare", tr: "La stazione", ph: "La stat-si-oné" },
+      { fr: "À gauche / À droite", tr: "A sinistra / destra", ph: "A si-nistra / des-tra" }
     ],
     food: [
       { fr: "L'addition", tr: "Il conto", ph: "Il konnt-o" },
-      { fr: "Un café", tr: "Un caffè", ph: "Oun kaf-é" },
+      { fr: "Un café s'il vous plaît", tr: "Un caffè per favore", ph: "Oun kaf-é per favoré" },
+      { fr: "Une table pour deux", tr: "Un tavolo per due", ph: "Oun ta-vo-lo per dou-é" },
       { fr: "C'est délicieux", tr: "È delizioso", ph: "È dé-li-tsio-zo" }
     ],
     hotel: [
-      { fr: "Une chambre", tr: "Una camera", ph: "Ouna ka-mé-ra" }
+      { fr: "Une chambre", tr: "Una camera", ph: "Ouna ka-mé-ra" },
+      { fr: "La clé", tr: "La chiave", ph: "La kia-vé" }
     ],
     shopping: [
-      { fr: "C'est cher", tr: "È caro", ph: "È ka-ro" }
+      { fr: "C'est cher", tr: "È caro", ph: "È ka-ro" },
+      { fr: "Combien ?", tr: "Quanto?", ph: "Kouan-to" }
     ],
     emergency: [
-      { fr: "Au secours", tr: "Aiuto", ph: "A-you-to" }
+      { fr: "Au secours", tr: "Aiuto", ph: "A-you-to" },
+      { fr: "Un médecin", tr: "Un medico", ph: "Oun mé-di-ko" }
     ]
   },
   "ja": {
     essentials: [
       { fr: "Bonjour", tr: "Konnichiwa", ph: "Kon-ni-tchi-wa" },
-      { fr: "Merci", tr: "Arigatō", ph: "A-ri-ga-to" },
-      { fr: "Pardon", tr: "Sumimasen", ph: "Sou-mi-ma-senn" }
+      { fr: "Merci", tr: "Arigatō gozaimasu", ph: "A-ri-ga-to go-za-ï-mass" },
+      { fr: "S'il vous plaît", tr: "Onegaishimasu", ph: "O-né-ga-ï-chi-mass" },
+      { fr: "Pardon / Excusez-moi", tr: "Sumimasen", ph: "Sou-mi-ma-senn" }
     ],
     transport: [
-      { fr: "Où est le taxi ?", tr: "Takushī wa doko?", ph: "Takouchi wa doko" }
+      { fr: "Où est le taxi ?", tr: "Takushī wa doko desu ka?", ph: "Takouchi wa doko dess ka" },
+      { fr: "Où sont les toilettes ?", tr: "Toire wa doko desu ka?", ph: "To-ï-ré wa do-ko dess ka" },
+      { fr: "La gare", tr: "Eki", ph: "É-ki" }
     ],
     food: [
       { fr: "L'addition", tr: "O-kaikei", ph: "O-kaï-keï" },
+      { fr: "C'est délicieux", tr: "Oishii desu", ph: "O-ï-chi dess" },
       { fr: "Bon appétit", tr: "Itadakimasu", ph: "I-ta-da-ki-mass" }
     ],
     hotel: [
+      { fr: "Chambre", tr: "Heya", ph: "Hé-ya" },
       { fr: "Le Wi-Fi", tr: "Waï-faï", ph: "Wa-ï-fa-ï" }
     ],
     shopping: [
-      { fr: "Combien ?", tr: "Ikura desu ka?", ph: "I-kou-ra dess ka" }
+      { fr: "Combien ça coûte ?", tr: "Ikura desu ka?", ph: "I-kou-ra dess ka" },
+      { fr: "C'est cher", tr: "Takai desu", ph: "Ta-ka-ï dess" }
     ],
     emergency: [
-      { fr: "Aidez-moi", tr: "Tasukete", ph: "Ta-sou-ké-té" }
+      { fr: "Aidez-moi", tr: "Tasukete kudasai", ph: "Ta-sou-ké-té kou-da-saï" },
+      { fr: "Police", tr: "Keisatsu", ph: "Keï-sa-tsou" }
     ]
   },
   "pt": {
     essentials: [
       { fr: "Bonjour", tr: "Bom dia", ph: "Bon dji-a" },
-      { fr: "Merci", tr: "Obrigado", ph: "O-bri-ga-dou" }
+      { fr: "Merci beaucoup", tr: "Muito obrigado", ph: "Mou-ï-tou o-bri-ga-dou" },
+      { fr: "S'il vous plaît", tr: "Por favor", ph: "Por fa-bor" }
     ],
     transport: [
-      { fr: "Taxi", tr: "Táxi", ph: "Taksi" }
+      { fr: "Le taxi", tr: "O táxi", ph: "Ou taksi" },
+      { fr: "Toilettes", tr: "O banheiro", ph: "Ou ba-nyé-rou" }
     ],
     food: [
-      { fr: "L'addition", tr: "A conta", ph: "A konnt-a" }
+      { fr: "L'addition", tr: "A conta", ph: "A konnt-a" },
+      { fr: "Une bière", tr: "Uma cerveja", ph: "Ou-ma ser-vé-ja" }
     ],
     hotel: [
-      { fr: "Chambre", tr: "Quarto", ph: "Kouar-tou" }
+      { fr: "Une chambre", tr: "Um quarto", ph: "Oun kouar-tou" }
     ],
     shopping: [
-      { fr: "Combien ?", tr: "Quanto?", ph: "Kouan-tou" }
+      { fr: "Combien ?", tr: "Quanto custa?", ph: "Kouan-tou kous-ta" }
     ],
     emergency: [
-      { fr: "Secours", tr: "Socorro", ph: "Sou-ko-rou" }
+      { fr: "Au secours", tr: "Socorro", ph: "Sou-ko-rou" }
     ]
   },
   "ar": {
     essentials: [
       { fr: "Bonjour", tr: "Marhaba", ph: "Mar-ha-ba" },
-      { fr: "Merci", tr: "Shukran", ph: "Chou-krane" }
+      { fr: "Merci", tr: "Shukran", ph: "Chou-krane" },
+      { fr: "S'il vous plaît", tr: "Min fadlak", ph: "Mine fad-lak" }
     ],
     transport: [
+      { fr: "Taxi", tr: "Taxi", ph: "Taksi" },
       { fr: "Où est... ?", tr: "Ayna... ?", ph: "Ay-na" }
     ],
     food: [
@@ -193,7 +216,7 @@ const survivalData: Record<string, any> = {
       { fr: "Hôtel", tr: "Funduq", ph: "Foun-douk" }
     ],
     shopping: [
-      { fr: "Prix", tr: "Al-thaman", ph: "Al-ta-mane" }
+      { fr: "Le prix ?", tr: "Al-thaman ?", ph: "Al-ta-mane" }
     ],
     emergency: [
       { fr: "Aidez-moi", tr: "Sa'iduni", ph: "Sa-i-dou-ni" }
@@ -217,84 +240,76 @@ export default function Triptalk() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FFFBF0] text-[#2D2D2D] p-4 md:p-12 font-sans selection:bg-orange-100">
-      <div className="max-w-2xl mx-auto">
+    <main className="min-h-screen bg-[#FAF9F6] text-[#2D2D2D] p-4 md:p-8 font-sans selection:bg-orange-100">
+      <div className="max-w-md mx-auto">
         
-        {/* Header Startup Premium */}
-        <header className="text-center mb-16">
-          <h1 className="text-7xl md:text-8xl font-black tracking-tighter text-[#1A1A1A] mb-2 italic">
+        <header className="text-center mt-6 mb-10">
+          <h1 className="text-5xl font-black tracking-tighter text-[#1A1A1A] italic">
             TRIPTALK<span className="text-orange-600 not-italic">.</span>
           </h1>
-          <p className="text-xl font-bold text-orange-800/60 uppercase tracking-[0.3em] italic">Kit de survie ultime</p>
+          <p className="text-[10px] font-black text-orange-800/40 uppercase tracking-[0.3em]">Kit de survie ultime</p>
         </header>
 
         {!showPlan ? (
-          <div className="grid gap-6 animate-in fade-in slide-in-from-bottom-10 duration-700">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-[#A09A8E] mb-2 px-4 italic">Où partez-vous ?</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => { setTarget(lang.code); setShowPlan(true); }}
-                  className="group relative flex flex-col items-start p-10 bg-white hover:bg-[#1A1A1A] rounded-[3.5rem] transition-all duration-500 shadow-2xl shadow-orange-900/5 border border-white hover:-translate-y-3"
-                >
-                  <span className="text-6xl mb-8 group-hover:scale-110 transition-transform duration-500">{lang.flag}</span>
-                  <span className="text-4xl font-black group-hover:text-white transition-colors tracking-tighter mb-2">{lang.name}</span>
-                  <span className="text-sm font-medium text-[#A09A8E] group-hover:text-slate-500 mb-6 italic">{lang.desc}</span>
-                  <div className="w-14 h-14 rounded-3xl bg-orange-50 group-hover:bg-orange-600 flex items-center justify-center transition-all">
-                    <span className="text-orange-600 group-hover:text-white font-bold text-xl">→</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+          <div className="grid gap-3 animate-in fade-in duration-500">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => { setTarget(lang.code); setShowPlan(true); }}
+                className="group flex items-center gap-4 p-5 bg-white hover:bg-[#1A1A1A] rounded-[2rem] transition-all shadow-sm border border-slate-100 hover:-translate-y-1"
+              >
+                <span className="text-3xl">{lang.flag}</span>
+                <div className="text-left">
+                  <p className="text-lg font-bold group-hover:text-white leading-none">{lang.name}</p>
+                  <p className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-wider">{lang.desc}</p>
+                </div>
+                <span className="ml-auto text-orange-600 font-bold group-hover:translate-x-1 transition-transform">→</span>
+              </button>
+            ))}
           </div>
         ) : (
-          <div className="space-y-6 animate-in slide-in-from-right-10 duration-500">
-            {/* Header Floating */}
-            <div className="sticky top-6 z-30 flex items-center justify-between bg-white/95 backdrop-blur-2xl p-6 rounded-[3rem] border border-white shadow-2xl shadow-orange-900/10 mb-12">
-              <button onClick={() => setShowPlan(false)} className="w-16 h-16 flex items-center justify-center bg-[#FFFBF0] hover:bg-orange-600 hover:text-white rounded-[2rem] transition-all duration-300 font-black text-3xl shadow-inner">←</button>
-              <div className="flex flex-col items-center">
-                <span className="text-4xl mb-1">{selectedLang?.flag}</span>
-                <span className="font-black text-xl uppercase tracking-tighter">{selectedLang?.name}</span>
+          <div className="space-y-4 animate-in slide-in-from-right-4 duration-500">
+            <div className="sticky top-2 z-30 flex items-center justify-between bg-white/80 backdrop-blur-md p-3 rounded-2xl border border-white shadow-sm mb-6">
+              <button onClick={() => setShowPlan(false)} className="w-10 h-10 flex items-center justify-center bg-[#F5F5F0] rounded-xl font-bold text-lg hover:bg-orange-600 hover:text-white transition-colors">←</button>
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{selectedLang?.flag}</span>
+                <span className="font-black text-[11px] uppercase tracking-[0.1em]">{selectedLang?.name}</span>
               </div>
-              <div className="w-16"></div>
+              <div className="w-10"></div>
             </div>
 
-            {/* Catégories Accordéons */}
-            <div className="space-y-6">
+            <div className="space-y-3">
               {categories.map((cat) => (
-                <div key={cat.id} className="bg-white/70 backdrop-blur-md rounded-[3.5rem] border border-white overflow-hidden transition-all duration-500 shadow-xl">
+                <div key={cat.id} className="bg-white rounded-[1.8rem] border border-slate-100 overflow-hidden shadow-sm transition-all">
                   <button 
                     onClick={() => setOpenCat(openCat === cat.id ? null : cat.id)}
-                    className={`w-full flex items-center justify-between p-10 font-black text-2xl transition-all ${openCat === cat.id ? 'bg-[#1A1A1A] text-white' : 'text-[#4A4A4A] hover:bg-white'}`}
+                    className={`w-full flex items-center justify-between p-5 font-bold transition-all ${openCat === cat.id ? 'bg-[#1A1A1A] text-white' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    <div className="flex items-center gap-6">
-                      <span className={`w-14 h-14 rounded-[1.5rem] flex items-center justify-center text-3xl ${openCat === cat.id ? 'bg-orange-600' : 'bg-[#FFFBF0] shadow-sm'}`}>{cat.icon}</span>
-                      <span className="tracking-tighter uppercase">{cat.label}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">{cat.icon}</span>
+                      <span className="text-xs font-black uppercase tracking-widest">{cat.label}</span>
                     </div>
-                    <span className={`text-4xl transition-transform duration-500 ${openCat === cat.id ? 'rotate-180' : ''}`}>{openCat === cat.id ? '−' : '+'}</span>
+                    <span className="text-xl font-light">{openCat === cat.id ? '−' : '+'}</span>
                   </button>
 
                   {openCat === cat.id && (
-                    <div className="p-8 space-y-6 bg-white/50 animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="p-3 space-y-2 bg-[#FBFBFA] animate-in slide-in-from-top-2 duration-300">
                       {data[cat.id]?.map((p: any, i: number) => (
-                        <div key={i} className="group bg-white p-10 rounded-[3rem] border border-[#F5F0E5] shadow-sm hover:shadow-2xl hover:border-orange-200 transition-all duration-500">
-                          <div className="flex justify-between items-start gap-8">
-                            <div className="flex-1">
-                              <p className="text-xs font-black uppercase text-[#A09A8E] mb-4 tracking-[0.2em]">{p.fr}</p>
-                              <h4 className="text-4xl font-[1000] text-[#1A1A1A] leading-[0.95] mb-6 tracking-tighter italic">{p.tr}</h4>
-                              <div className="inline-flex items-center gap-4 px-5 py-3 bg-[#FFFBF0] rounded-[1.5rem] border border-orange-100">
-                                <span className="text-[11px] font-black text-orange-700 uppercase tracking-widest">Prononciation</span>
-                                <span className="text-lg font-bold text-orange-900 italic">{p.ph}</span>
-                              </div>
+                        <div key={i} className="bg-white p-5 rounded-[1.4rem] border border-slate-50 flex items-center justify-between gap-4 hover:border-orange-100 transition-colors">
+                          <div className="flex-1">
+                            <p className="text-[9px] font-black uppercase text-slate-400 mb-2 tracking-wider leading-none">{p.fr}</p>
+                            <h4 className="text-xl font-[900] text-[#1A1A1A] italic leading-tight mb-3 tracking-tight">{p.tr}</h4>
+                            <div className="flex items-center gap-2">
+                                <span className="text-[8px] font-black bg-orange-50 text-orange-700 px-2 py-1 rounded-lg uppercase tracking-tighter">Prononcer</span>
+                                <span className="text-xs text-slate-500 font-bold italic">{p.ph}</span>
                             </div>
-                            <button 
-                              onClick={() => speak(p.tr)} 
-                              className="shrink-0 w-20 h-20 bg-[#1A1A1A] text-white rounded-[2rem] flex items-center justify-center text-4xl hover:bg-orange-600 hover:scale-110 transition-all shadow-2xl active:scale-95"
-                            >
-                              🔊
-                            </button>
                           </div>
+                          <button 
+                            onClick={() => speak(p.tr)} 
+                            className="shrink-0 w-11 h-11 bg-[#1A1A1A] text-white rounded-2xl flex items-center justify-center text-xl active:scale-90 transition-all shadow-md hover:bg-orange-600"
+                          >
+                            🔊
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -303,13 +318,9 @@ export default function Triptalk() {
               ))}
             </div>
 
-            <footer className="py-24 text-center">
-              <button 
-                onClick={() => { window.scrollTo({top: 0, behavior: 'smooth'}); setShowPlan(false); }}
-                className="group flex items-center gap-6 mx-auto px-12 py-6 bg-white rounded-full font-black text-sm uppercase tracking-[0.4em] text-[#A09A8E] hover:text-orange-600 transition-all shadow-2xl hover:-translate-y-1"
-              >
-                <span>Changer de langue</span>
-                <span className="group-hover:translate-x-3 transition-transform text-xl">→</span>
+            <footer className="py-10 text-center">
+              <button onClick={() => setShowPlan(false)} className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-300 hover:text-orange-600 transition-colors">
+                Changer de destination
               </button>
             </footer>
           </div>
