@@ -4,29 +4,48 @@ export async function POST(req: Request) {
   try {
     const { sourceLang, targetLang, time } = await req.json();
     
-    // VERIFICATION 1 : La clé existe-t-elle ?
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "LA CLÉ GEMINI_API_KEY EST VIDE SUR VERCEL" }), { status: 500 });
+      return new Response(JSON.stringify({ error: "Clé API manquante sur Vercel" }), { status: 500 });
     }
 
+    // On initialise avec la version stable
     const genAI = new GoogleGenerativeAI(apiKey);
+    
+    // Changement ici : On s'assure d'utiliser le nom exact du modèle
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
-    const prompt = `Crée un guide de survie JSON pour un voyageur parlant ${sourceLang} vers ${targetLang}. 
-    Structure: {"planTitle": "Voyage", "days": [{"title": "J1", "phrases": [{"original": "Salut", "translated": "Hi", "pronunciation": "Hai"}]}]}`;
+    const prompt = `Tu es un coach de voyage. Crée un guide de survie JSON pour un voyageur parlant ${sourceLang} vers un pays parlant ${targetLang}. 
+    Le voyage est dans ${time}. 
+    Réponds UNIQUEMENT avec ce format JSON strict :
+    {
+      "planTitle": "Pack de survie : ${targetLang}",
+      "days": [
+        {
+          "title": "JOUR 1 : L'essentiel",
+          "phrases": [
+            { "original": "Bonjour", "translated": "...", "pronunciation": "..." }
+          ]
+        }
+      ]
+    }`;
 
-    // VERIFICATION 2 : L'appel à Google
+    // On utilise generateContent de manière simple
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text().replace(/```json/g, "").replace(/```/g, "").trim();
+    let text = response.text();
+
+    // Nettoyage au cas où l'IA met des balises Markdown
+    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
 
     return new Response(text, {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });
   } catch (error: any) {
-    // On renvoie l'erreur réelle pour la voir dans l'alerte
-    return new Response(JSON.stringify({ error: "ERREUR GOOGLE: " + error.message }), { status: 500 });
+    console.error("Erreur détaillée:", error);
+    return new Response(JSON.stringify({ 
+      error: "Erreur de configuration du modèle. Vérifie ta clé sur AI Studio." 
+    }), { status: 500 });
   }
 }
