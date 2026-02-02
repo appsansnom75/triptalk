@@ -1,27 +1,22 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// On utilise ta clé directement ici pour garantir le fonctionnement
 const genAI = new GoogleGenerativeAI("AIzaSyDD7EyLk-vSXInKE2rkIbbyCCjafuq1kOU");
 
 export async function POST(req: Request) {
   try {
     const { sourceLang, targetLang, time } = await req.json();
-
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-1.5-flash",
-      generationConfig: { responseMimeType: "application/json" } 
-    });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
-    const prompt = `Tu es un coach de voyage expert. Crée un plan de survie linguistique pour un utilisateur parlant ${sourceLang} qui part en vacances dans un pays parlant ${targetLang} dans ${time}.
-    Focalise-toi sur l'essentiel : Taxi, Hôtel, Restaurant, Urgences.
-    Retourne UNIQUEMENT un objet JSON avec cette structure exacte :
+    const prompt = `Tu es Triptalk, un coach de voyage. 
+    Crée un plan de survie pour un voyageur parlant ${sourceLang} allant dans un pays parlant ${targetLang} (${time}).
+    Retourne UNIQUEMENT un objet JSON strictement comme ceci, sans texte autour :
     {
-      "planTitle": "Mon Guide de Survie : ${targetLang} 🌴",
+      "planTitle": "Guide de survie : ${targetLang}",
       "days": [
         {
-          "title": "JOUR 1 : Premiers pas",
+          "title": "JOUR 1 : L'arrivée",
           "phrases": [
-            { "original": "Phrase en ${sourceLang}", "translated": "Phrase en ${targetLang}", "pronunciation": "Prononciation phonétique" }
+            { "original": "Bonjour", "translated": "...", "pronunciation": "..." }
           ]
         }
       ]
@@ -31,19 +26,19 @@ export async function POST(req: Request) {
     const response = await result.response;
     let text = response.text();
 
-    // Nettoyage au cas où l'IA ajoute des caractères parasites
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    const cleanJson = jsonMatch ? jsonMatch[0] : text;
+    // 🛡️ NETTOYAGE ULTIME : On ne garde que ce qui est entre les premières et dernières accolades
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}') + 1;
+    if (start !== -1 && end !== -1) {
+      text = text.substring(start, end);
+    }
 
-    return new Response(cleanJson, {
+    return new Response(text, {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }
     });
   } catch (error) {
-    console.error("Erreur Triptalk:", error);
-    return new Response(JSON.stringify({ error: "L'IA est restée sur la plage..." }), { 
-      status: 500, 
-      headers: { "Content-Type": "application/json" } 
-    });
+    console.error(error);
+    return new Response(JSON.stringify({ error: "Bug IA" }), { status: 500 });
   }
 }
