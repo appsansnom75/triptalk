@@ -2,180 +2,84 @@
 import { useState } from 'react';
 
 const languages = [
-  { name: "Anglais", code: "en" },
-  { name: "Espagnol", code: "es" },
-  { name: "Italien", code: "it" },
-  { name: "Japonais", code: "ja" },
-  { name: "Portugais", code: "pt" },
-  { name: "Arabe", code: "ar" }
+  { name: "Anglais", code: "en", flag: "🇬🇧" },
+  { name: "Espagnol", code: "es", flag: "🇪🇸" },
+  { name: "Italien", code: "it", flag: "🇮🇹" },
+  { name: "Japonais", code: "ja", flag: "🇯🇵" },
+  { name: "Portugais", code: "pt", flag: "🇵🇹" },
+  { name: "Arabe", code: "ar", flag: "🇲🇦" }
 ];
 
-// Base de données enrichie
 const survivalData: Record<string, any> = {
-  "en": {
-    essentials: [
-      { original: "Bonjour", translated: "Hello", pronunciation: "Hélo" },
-      { original: "Merci", translated: "Thank you", pronunciation: "Tanc you" },
-      { original: "S'il vous plaît", translated: "Please", pronunciation: "Pliz" },
-      { original: "Où sont les toilettes ?", translated: "Where are the toilets?", pronunciation: "Wère are ze toïlettes" }
-    ],
-    transport: [
-      { original: "Un ticket s'il vous plaît", translated: "One ticket please", pronunciation: "Wone tiquet pliz" },
-      { original: "Où est le taxi ?", translated: "Where is the taxi?", pronunciation: "Wère iz ze taksi" },
-      { original: "À gauche / À droite", translated: "Left / Right", pronunciation: "Left / Raït" }
-    ],
-    food: [
-      { original: "L'addition s'il vous plaît", translated: "The bill please", pronunciation: "Ze bil pliz" },
-      { original: "Une table pour deux", translated: "A table for two", pronunciation: "Ey tebeul for tou" },
-      { original: "C'est délicieux", translated: "It's delicious", pronunciation: "Its délicheu-ce" }
-    ],
-    emergency: [
-      { original: "Aidez-moi", translated: "Help me", pronunciation: "Helpe mi" },
-      { original: "Je suis perdu", translated: "I am lost", pronunciation: "Aïe am lost" },
-      { original: "Appelez un docteur", translated: "Call a doctor", pronunciation: "Col ey docteur" }
-    ]
-  },
-  "es": {
-    essentials: [
-      { original: "Bonjour", translated: "Hola", pronunciation: "Ola" },
-      { original: "Merci", translated: "Gracias", pronunciation: "Grassia-ss" },
-      { original: "S'il vous plaît", translated: "Por favor", pronunciation: "Por fabor" },
-      { original: "Où sont les toilettes ?", translated: "¿Dónde están los baños?", pronunciation: "Donndé esstane loss bagnoss" }
-    ],
-    transport: [
-      { original: "Un ticket s'il vous plaît", translated: "Un billete por favor", pronunciation: "Oun biyété por fabor" },
-      { original: "Où est le taxi ?", translated: "¿Dónde está el taxi?", pronunciation: "Donndé essta el taksi" },
-      { original: "Tout droit", translated: "Todo recto", pronunciation: "Todo rek-to" }
-    ],
-    food: [
-      { original: "L'addition s'il vous plaît", translated: "La cuenta por favor", pronunciation: "La kouennta por fabor" },
-      { original: "Eau s'il vous plaît", translated: "Agua por favor", pronunciation: "Agwa por fabor" },
-      { original: "Santé !", translated: "¡Salud!", pronunciation: "Salou-de" }
-    ],
-    emergency: [
-      { original: "Aidez-moi", translated: "Ayúdeme", pronunciation: "Ayoudémé" },
-      { original: "Je suis perdu", translated: "Estoy perdido", pronunciation: "Esstoy perdido" },
-      { original: "Police", translated: "Policía", pronunciation: "Polissia" }
-    ]
-  },
-  "it": {
-    essentials: [
-      { original: "Bonjour", translated: "Buongiorno", pronunciation: "Bouone-djor-no" },
-      { original: "Merci", translated: "Grazie", pronunciation: "Grat-sié" },
-      { original: "S'il vous plaît", translated: "Per favore", pronunciation: "Per favoré" },
-      { original: "Pardon", translated: "Scusi", pronunciation: "Skou-zi" }
-    ],
-    transport: [
-      { original: "La gare", translated: "La stazione", pronunciation: "La stat-si-oné" },
-      { original: "Où est le taxi ?", translated: "Dov'è il taxi?", pronunciation: "Dov-è il taksi" }
-    ],
-    food: [
-      { original: "L'addition s'il vous plaît", translated: "Il conto per favore", pronunciation: "Il konnt-o per favoré" },
-      { original: "Un café s'il vous plaît", translated: "Un caffè per favore", pronunciation: "Oun kaf-é per favoré" }
-    ],
-    emergency: [
-      { original: "Aidez-moi", translated: "Aiutatemi", pronunciation: "A-you-ta-té-mi" },
-      { original: "Hôpital", translated: "Ospedale", pronunciation: "Os-pé-da-lé" }
-    ]
-  },
-  "ja": {
-    essentials: [
-      { original: "Bonjour", translated: "Konnichiwa", pronunciation: "Kon-ni-tchi-wa" },
-      { original: "Merci", translated: "Arigatō", pronunciation: "A-ri-ga-to" },
-      { original: "Oui / Non", translated: "Hai / Iie", pronunciation: "Haï / I-ié" }
-    ],
-    transport: [
-      { original: "Train", translated: "Densha", pronunciation: "Denn-cha" },
-      { original: "Où est le taxi ?", translated: "Takushī wa doko?", pronunciation: "Takouchi wa doko" }
-    ],
-    food: [
-      { original: "L'addition s'il vous plaît", translated: "O-kaikei kudasai", pronunciation: "O-kaï-keï kou-da-saï" },
-      { original: "Bon appétit", translated: "Itadakimasu", pronunciation: "I-ta-da-ki-mass" }
-    ],
-    emergency: [
-      { original: "Aidez-moi", translated: "Tasukete", pronunciation: "Ta-sou-ké-té" },
-      { original: "Médecin", translated: "Isha", pronunciation: "I-cha" }
-    ]
-  },
-  "pt": {
-    essentials: [
-      { original: "Bonjour", translated: "Bom dia", pronunciation: "Bon dji-a" },
-      { original: "Merci", translated: "Obrigado", pronunciation: "Obri-ga-dou" },
-      { original: "Pardon", translated: "Desculpe", pronunciation: "Dech-koulp" }
-    ],
-    transport: [
-      { original: "Aéroport", translated: "Aeroporto", pronunciation: "A-é-ro-por-tou" },
-      { original: "Où est le taxi ?", translated: "Onde está o táxi?", pronunciation: "Onndé eshta ou taksi" }
-    ],
-    food: [
-      { original: "L'addition s'il vous plaît", translated: "A conta, por favor", pronunciation: "A konnt-a por fabor" },
-      { original: "Délicieux", translated: "Delicioso", pronunciation: "Déli-si-o-zou" }
-    ],
-    emergency: [
-      { original: "Au secours", translated: "Socorro", pronunciation: "Sou-ko-rou" },
-      { original: "Pharmacie", translated: "Farmácia", pronunciation: "Far-ma-si-a" }
-    ]
-  },
-  "ar": {
-    essentials: [
-      { original: "Bonjour", translated: "Marhaba", pronunciation: "Mar-ha-ba" },
-      { original: "Merci", translated: "Shukran", pronunciation: "Chou-krane" },
-      { original: "S'il vous plaît", translated: "Min fadlak", pronunciation: "Mine fad-lak" }
-    ],
-    transport: [
-      { original: "Ici / Là-bas", translated: "Huna / Hunak", pronunciation: "Hou-na / Hou-nak" },
-      { original: "Où est le taxi ?", translated: "Ayna al-taxi?", pronunciation: "Ay-na al-taksi" }
-    ],
-    food: [
-      { original: "L'addition s'il vous plaît", translated: "Al-hisab", pronunciation: "Al-hi-sab" },
-      { original: "Pain / Eau", translated: "Khubz / Ma", pronunciation: "Khoubz / Ma" }
-    ],
-    emergency: [
-      { original: "Aidez-moi", translated: "Sa'iduni", pronunciation: "Sa-i-dou-ni" },
-      { original: "Danger", translated: "Khatar", pronunciation: "Kha-tar" }
-    ]
-  }
+  "en": [
+    { q: "Bonjour / Salut", a: "Hello / Hi", p: "Hélo / Haï" },
+    { q: "S'il vous plaît", a: "Please", p: "Pliz" },
+    { q: "Merci beaucoup", a: "Thank you so much", p: "Tanc you so motch" },
+    { q: "Où sont les toilettes ?", a: "Where are the toilets?", p: "Wère are ze toïlettes" },
+    { q: "Où est le taxi / bus ?", a: "Where is the taxi / bus?", p: "Wère iz ze taksi / beusse" },
+    { q: "Je ne comprends pas", a: "I don't understand", p: "Aïe donnt onndeur-stannd" },
+    { q: "Parlez-vous français ?", a: "Do you speak French?", p: "Dou you spik frentch" },
+    { q: "L'addition s'il vous plaît", a: "The bill please", p: "Ze bil pliz" },
+    { q: "Combien ça coûte ?", a: "How much is it?", p: "Haou motch iz it" },
+    { q: "Où est l'hôpital ?", a: "Where is the hospital?", p: "Wère iz ze ospital" },
+    { q: "Une table pour deux", a: "A table for two", p: "Ey tebeul for tou" },
+    { q: "Eau s'il vous plaît", a: "Water please", p: "Woteur pliz" },
+    { q: "Aidez-moi", a: "Help me", p: "Helpe mi" },
+    { q: "Je suis perdu", a: "I am lost", p: "Aïe am lost" },
+    { q: "Excusez-moi / Pardon", a: "Excuse me / Sorry", p: "Ex-kiouze mi / Sory" }
+  ],
+  "es": [
+    { q: "Bonjour / Salut", a: "Hola", p: "Ola" },
+    { q: "S'il vous plaît", a: "Por favor", p: "Por fabor" },
+    { q: "Merci beaucoup", a: "Muchas gracias", p: "Moutcha-ss grassia-ss" },
+    { q: "Où sont les toilettes ?", a: "¿Dónde están los baños?", p: "Donndé esstane loss bagnoss" },
+    { q: "Où est le taxi ?", a: "¿Dónde está el taxi?", p: "Donndé essta el taksi" },
+    { q: "Je ne comprends pas", a: "No entiendo", p: "No enntienndo" },
+    { q: "Parlez-vous français ?", a: "¿Habla francés?", p: "Abla frain-sésse" },
+    { q: "L'addition s'il vous plaît", a: "La cuenta por favor", p: "La kouennta por fabor" },
+    { q: "Combien ça coûte ?", a: "¿Cuánto cuesta?", p: "Kouannto kouessta" },
+    { q: "Où est l'hôpital ?", a: "¿Dónde está el hospital?", p: "Donndé essta el ospital" },
+    { q: "Une table pour deux", a: "Una mesa para dos", p: "Ouna messa para doss" },
+    { q: "Eau s'il vous plaît", a: "Agua por favor", p: "Agwa por fabor" },
+    { q: "Aidez-moi", a: "Ayúdeme", p: "Ayoudémé" },
+    { q: "Je suis perdu", a: "Estoy perdido", p: "Esstoy perdido" },
+    { q: "Pardon", a: "Perdón / Disculpe", p: "Perdonne / Diss-koul-pé" }
+  ],
+  "it": [
+    { q: "Bonjour / Salut", a: "Buongiorno / Ciao", p: "Bouone-djor-no / Tchao" },
+    { q: "S'il vous plaît", a: "Per favore", p: "Per favoré" },
+    { q: "Merci beaucoup", a: "Grazie mille", p: "Grat-sié mil-lé" },
+    { q: "Où sont les toilettes ?", a: "Dove sono i bagni?", p: "Dov-é sono i ba-nyi" },
+    { q: "Où est le taxi ?", a: "Dov'è il taxi?", p: "Dov-è il taksi" },
+    { q: "Je ne comprends pas", a: "Non capisco", p: "Non ka-pis-ko" },
+    { q: "Parlez-vous français ?", a: "Parla francese?", p: "Par-la fran-tché-zé" },
+    { q: "L'addition s'il vous plaît", a: "Il conto per favore", p: "Il konnt-o per favoré" },
+    { q: "Combien ça coûte ?", a: "Quanto costa?", p: "Kouan-to kos-ta" },
+    { q: "Où est l'hôpital ?", a: "Dov'è l'ospedale?", p: "Dov-è l-os-pé-da-lé" },
+    { q: "Une table pour deux", a: "Un tavolo per due", p: "Oun ta-vo-lo per dou-é" },
+    { q: "Eau s'il vous plaît", a: "Acqua per favore", p: "Ak-koua per favoré" },
+    { q: "Aidez-moi", a: "Aiutatemi", p: "A-you-ta-té-mi" },
+    { q: "Je suis perdu", a: "Mi sono perso", p: "Mi so-no per-so" },
+    { q: "Pardon", a: "Scusi", p: "Skou-zi" }
+  ],
+  "ja": [
+    { q: "Bonjour", a: "Konnichiwa", p: "Kon-ni-tchi-wa" },
+    { q: "S'il vous plaît", a: "Onegaishimasu", p: "O-né-ga-ï-chi-mass" },
+    { q: "Merci", a: "Arigatō gozaimasu", p: "A-ri-ga-to go-za-ï-mass" },
+    { q: "Où sont les toilettes ?", a: "Toire wa doko?", p: "To-ï-ré wa do-ko" },
+    { q: "Taxi", a: "Takushī", p: "Takou-chi" },
+    { q: "Je ne comprends pas", a: "Wakarimasen", p: "Wa-ka-ri-ma-senn" },
+    { q: "L'addition s'il vous plaît", a: "O-kaikei kudasai", p: "O-kaï-keï kou-da-saï" },
+    { q: "Aidez-moi", a: "Tasukete kudasai", p: "Ta-sou-ké-té kou-da-saï" }
+  ]
 };
 
 export default function Triptalk() {
-  const [loading, setLoading] = useState(false);
-  const [plan, setPlan] = useState<any>(null);
+  const [target, setTarget] = useState("");
+  const [showPlan, setShowPlan] = useState(false);
 
-  const generatePlan = (e: any) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    const formData = new FormData(e.target);
-    const targetCode = formData.get("targetLang") as string;
-    const time = formData.get("time") as string;
-    const targetName = languages.find(l => l.code === targetCode)?.name;
-
-    setTimeout(() => {
-      const data = survivalData[targetCode];
-      let days = [];
-
-      // Logique de génération selon la durée
-      if (time === "24h") {
-        days = [{ title: "KIT DE SURVIE EXPRESS", phrases: [...data.essentials, ...data.emergency.slice(0, 1)] }];
-      } else if (time === "1semaine") {
-        days = [
-          { title: "JOUR 1 : Les bases", phrases: data.essentials },
-          { title: "JOUR 2 : Se déplacer", phrases: data.transport },
-          { title: "JOUR 3 : Manger & Sortir", phrases: data.food }
-        ];
-      } else {
-        days = [
-          { title: "SEMAINE 1 : Immersion", phrases: data.essentials },
-          { title: "SEMAINE 2 : Logistique", phrases: data.transport },
-          { title: "SEMAINE 3 : Gastronomie", phrases: data.food },
-          { title: "SEMAINE 4 : Urgences & Sécurité", phrases: data.emergency }
-        ];
-      }
-
-      setPlan({ planTitle: `Guide ${targetName} (${time})`, days });
-      setLoading(false);
-    }, 800);
-  };
+  const selectedLang = languages.find(l => l.code === target);
+  const phrases = survivalData[target] || [];
 
   const speak = (text: string) => {
     if (typeof window !== "undefined") {
@@ -185,57 +89,64 @@ export default function Triptalk() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-sky-100 p-6 md:p-12 font-sans">
-      <div className="max-w-xl mx-auto">
-        <header className="text-center mb-10">
-          <h1 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-600 tracking-tighter mb-2">Triptalk</h1>
-          <p className="text-sky-800/60 font-medium italic">Le mode "Zéro Bug" activé 🌴</p>
+    <main className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans">
+      <div className="max-w-md mx-auto">
+        
+        {/* Header simple & efficace */}
+        <header className="text-center mb-8">
+          <h1 className="text-5xl font-black text-orange-500 tracking-tighter italic">TRIPTALK</h1>
+          <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.2em]">Survival Guide v2.0</p>
         </header>
 
-        {!plan ? (
-          <form onSubmit={generatePlan} className="bg-white/80 p-8 rounded-[3rem] shadow-2xl space-y-8 border border-white">
-            <div className="space-y-6">
-              <div className="relative">
-                <label className="text-sm font-black text-orange-400 ml-4 mb-2 block uppercase">Destination</label>
-                <select name="targetLang" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-sky-300 shadow-inner font-bold appearance-none">
-                  {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
-                </select>
-              </div>
-
-              <div className="relative">
-                <label className="text-sm font-black text-amber-400 ml-4 mb-2 block uppercase">Durée du séjour</label>
-                <select name="time" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-amber-300 shadow-inner font-bold appearance-none">
-                  <option value="24h">🚀 24 heures (Express)</option>
-                  <option value="1semaine">📅 1 semaine (Complet)</option>
-                  <option value="1mois">⏳ 1 mois (Immersion)</option>
-                </select>
-              </div>
+        {!showPlan ? (
+          <div className="bg-white p-8 rounded-[2rem] shadow-xl border border-slate-100">
+            <label className="block text-xs font-black uppercase text-slate-400 mb-4 ml-2">Choisis ta destination</label>
+            <div className="space-y-4">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => { setTarget(lang.code); setShowPlan(true); }}
+                  className="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-orange-500 hover:text-white rounded-2xl transition-all group border border-slate-100"
+                >
+                  <span className="text-2xl">{lang.flag}</span>
+                  <span className="font-black text-lg">{lang.name}</span>
+                  <span className="opacity-0 group-hover:opacity-100 transition-all">→</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
+            <div className="flex items-center justify-between bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
+              <button onClick={() => setShowPlan(false)} className="text-2xl">←</button>
+              <h2 className="font-black text-xl uppercase italic text-orange-500">{selectedLang?.name}</h2>
+              <span className="text-2xl">{selectedLang?.flag}</span>
             </div>
 
-            <button disabled={loading} className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white py-6 rounded-2xl font-black text-xl shadow-xl hover:scale-[1.02] transition-all">
-              {loading ? "Chargement..." : "GÉNÉRER MON PLAN 🥥"}
-            </button>
-          </form>
-        ) : (
-          <div className="space-y-8 animate-in slide-in-from-bottom-12">
-            <button onClick={() => setPlan(null)} className="flex items-center gap-2 font-black text-sky-600 mx-auto bg-sky-50 px-6 py-2 rounded-full">← Retour</button>
-            <h2 className="text-3xl font-black text-center">{plan.planTitle}</h2>
-            {plan.days.map((day: any, i: number) => (
-              <div key={i} className="bg-white/90 p-8 rounded-[2.5rem] shadow-lg border border-white">
-                <h3 className="text-xl font-black text-orange-500 mb-6 uppercase tracking-tighter italic">🍹 {day.title}</h3>
-                <div className="space-y-4">
-                  {day.phrases.map((p: any, j: number) => (
-                    <div key={j} className="flex justify-between items-center p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                      <div>
-                        <p className="font-black text-lg text-slate-800">{p.translated}</p>
-                        <p className="text-sky-500 text-sm italic">Prononce : {p.pronunciation}</p>
-                      </div>
-                      <button onClick={() => speak(p.translated)} className="bg-orange-100 p-3 rounded-xl">🔊</button>
-                    </div>
-                  ))}
+            <div className="grid gap-3">
+              {phrases.map((p: any, i: number) => (
+                <div key={i} className="bg-white p-5 rounded-[1.5rem] shadow-sm border border-slate-100 flex items-center justify-between group active:scale-[0.98] transition-all">
+                  <div className="flex-1">
+                    <p className="text-[10px] font-black uppercase text-slate-300 mb-1">{p.q}</p>
+                    <p className="text-xl font-black text-slate-800 leading-tight">{p.a}</p>
+                    <p className="text-orange-500 font-bold text-sm italic mt-1">{p.p}</p>
+                  </div>
+                  <button 
+                    onClick={() => speak(p.a)} 
+                    className="w-12 h-12 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-xl hover:bg-orange-500 hover:text-white transition-colors"
+                  >
+                    🔊
+                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            <button 
+              onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+              className="w-full py-4 text-slate-300 font-bold text-xs uppercase tracking-widest"
+            >
+              Retour en haut ↑
+            </button>
           </div>
         )}
       </div>
