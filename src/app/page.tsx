@@ -1,7 +1,6 @@
 "use client";
 import { useState, useMemo } from 'react';
 
-// --- CONFIGURATION DES DONNÉES ---
 const languages = [
   { name: "Anglais", code: "en", flag: "🇬🇧", desc: "Global Bridge" },
   { name: "Espagnol", code: "es", flag: "🇪🇸", desc: "Vibrante & Social" },
@@ -25,71 +24,92 @@ const survivalData: Record<string, any> = {
     essentials: [
       { fr: "Bonjour", tr: "Hello", ph: "Hélo" },
       { fr: "S'il vous plaît", tr: "Please", ph: "Pliz" },
-      { fr: "Merci beaucoup", tr: "Thank you so much", ph: "Tanc you so motch" },
-      { fr: "Comment ça va ?", tr: "How are you?", ph: "Haou are you" },
-      { fr: "Je ne comprends pas", tr: "I don't understand", ph: "Aïe donnt onndeur-stannd" },
-      { fr: "Parlez-vous français ?", tr: "Do you speak French?", ph: "Dou you spik frentch" },
-      { fr: "Je m'appelle...", tr: "My name is...", ph: "Maï né-ime iz" }
+      { fr: "Merci", tr: "Thank you", ph: "Tanc you" },
+      { fr: "Je ne comprends pas", tr: "I don't understand", ph: "Aï donnt onndeur-stannd" }
     ],
-    transport: [
-      { fr: "Où est le taxi ?", tr: "Where is the taxi?", ph: "Wère iz ze taksi" },
-      { fr: "La gare la plus proche", tr: "The nearest station", ph: "Ze nir-est sté-cheun" },
-      { fr: "À droite / À gauche", tr: "Right / Left", ph: "Raït / Left" },
-      { fr: "Tout droit", tr: "Straight ahead", ph: "Stré-ite a-hed" },
-      { fr: "Où sont les toilettes ?", tr: "Where are the toilets?", ph: "Wère are ze toïlettes" }
-    ],
-    food: [
-      { fr: "L'addition s'il vous plaît", tr: "The bill please", ph: "Ze bil pliz" },
-      { fr: "Une table pour deux", tr: "A table for two", ph: "Ey tebeul for tou" },
-      { fr: "C'est délicieux", tr: "It's delicious", ph: "Its délicheu-ce" },
-      { fr: "Eau plate / pétillante", tr: "Still / Sparkling water", ph: "Stil / Sparking woteur" }
-    ],
-    hotel: [
-      { fr: "Le Wi-Fi ?", tr: "The Wi-Fi password?", ph: "Ze waï-faï pass-weurd" },
-      { fr: "Serviettes propres", tr: "Clean towels", ph: "Kline taou-els" },
-      { fr: "Check-out ?", tr: "What time is check-out?", ph: "Wote taïme iz tchek-aout" }
-    ],
-    shopping: [
-      { fr: "Combien ça coûte ?", tr: "How much is it?", ph: "Haou motch iz it" },
-      { fr: "C'est trop cher", tr: "It's too expensive", ph: "Its tou ex-penn-siv" },
-      { fr: "Puis-je payer par carte ?", tr: "Can I pay by card?", ph: "Kanne aï pé baï card" }
-    ],
-    emergency: [
-      { fr: "Aidez-moi !", tr: "Help me!", ph: "Helpe mi" },
-      { fr: "Hôpital", tr: "Hospital", ph: "O-spi-teul" },
-      { fr: "Appelez la police", tr: "Call the police", ph: "Col ze poliss" }
-    ]
+    transport: [{ fr: "Où est le taxi ?", tr: "Where is the taxi?", ph: "Wère iz ze taksi" }],
+    food: [{ fr: "L'addition", tr: "The bill", ph: "Ze bil" }],
+    hotel: [{ fr: "Le Wi-Fi", tr: "The Wi-Fi", ph: "Waï-Faï" }],
+    shopping: [{ fr: "Le prix ?", tr: "How much?", ph: "Haou motch" }],
+    emergency: [{ fr: "Aidez-moi", tr: "Help me", ph: "Helpe mi" }]
   },
   "es": {
     essentials: [
       { fr: "Bonjour", tr: "Hola", ph: "Ola" },
-      { fr: "Merci beaucoup", tr: "Muchas gracias", ph: "Moutcha-ss grassia-ss" },
-      { fr: "S'il vous plaît", tr: "Por favor", ph: "Por fabor" },
-      { fr: "Comment ça va ?", tr: "¿Cómo estás?", ph: "Como essta-ss" },
-      { fr: "Je ne comprends pas", tr: "No entiendo", ph: "No enntienndo" }
+      { fr: "Merci", tr: "Gracias", ph: "Grassia-ss" },
+      { fr: "S'il vous plaît", tr: "Por favor", ph: "Por fabor" }
+    ],
+    transport: [{ fr: "Où est le taxi ?", tr: "¿Dónde está el taxi?", ph: "Donndé essta el taksi" }],
+    food: [{ fr: "L'addition", tr: "La cuenta", ph: "La kouennta" }],
+    hotel: [{ fr: "Le Wi-Fi", tr: "El Wi-Fi", ph: "El waï-faï" }],
+    shopping: [{ fr: "Combien ?", tr: "¿Cuánto cuesta?", ph: "Kouannto kouessta" }],
+    emergency: [{ fr: "Au secours", tr: "¡Socorro!", ph: "Sokorro" }]
+  },
+  "it": {
+    essentials: [
+      { fr: "Bonjour", tr: "Buongiorno", ph: "Bouone-djor-no" },
+      { fr: "Merci beaucoup", tr: "Grazie mille", ph: "Grat-sié mil-lé" },
+      { fr: "S'il vous plaît", tr: "Per favore", ph: "Per fa-vor-é" },
+      { fr: "Comment ça va ?", tr: "Come sta?", ph: "Ko-mé essta" },
+      { fr: "Je m'appelle...", tr: "Mi chiamo...", ph: "Mi kia-mo" }
     ],
     transport: [
-      { fr: "Où est le taxi ?", tr: "¿Dónde está el taxi?", ph: "Donndé essta el taksi" },
-      { fr: "À gauche / À droite", tr: "Izquierda / Derecha", ph: "Iss-ki-erda / dé-rétcha" },
-      { fr: "Où sont les toilettes ?", tr: "¿Dónde están los baños?", ph: "Donndé esstane loss bagnoss" }
+      { fr: "Où est le taxi ?", tr: "Dov'è il taxi?", ph: "Dov-è il taksi" },
+      { fr: "La gare", tr: "La stazione", ph: "La stat-si-o-né" },
+      { fr: "À gauche / À droite", tr: "A sinistra / destra", ph: "Si-nis-tra / des-tra" }
     ],
     food: [
-      { fr: "L'addition s'il vous plaît", tr: "La cuenta por favor", ph: "La kouennta por fabor" },
-      { fr: "C'est délicieux", tr: "Está muy rico", ph: "Essta mouy riko" },
-      { fr: "Santé !", tr: "¡Salud!", ph: "Salou-de" }
+      { fr: "L'addition s'il vous plaît", tr: "Il conto, per favore", ph: "Il konn-to per fa-vor-é" },
+      { fr: "C'est délicieux", tr: "È delizioso", ph: "È dé-li-tsio-zo" },
+      { fr: "Un café s'il vous plaît", tr: "Un caffè per favore", ph: "Oun kaf-é" }
     ],
     hotel: [
-      { fr: "Le Wi-Fi", tr: "El Wi-Fi", ph: "El waï-faï" },
-      { fr: "La clé", tr: "La llave", ph: "La yabé" }
+      { fr: "Une chambre", tr: "Una camera", ph: "Ouna ka-mé-ra" },
+      { fr: "La clé", tr: "La chiave", ph: "La kia-vé" }
     ],
     shopping: [
-      { fr: "Combien ?", tr: "¿Cuánto cuesta?", ph: "Kouannto kouessta" },
-      { fr: "C'est cher", tr: "Es caro", ph: "Ess karo" }
+      { fr: "C'est cher", tr: "È caro", ph: "È ka-ro" },
+      { fr: "Combien ça coûte ?", tr: "Quanto costa?", ph: "Kouan-to kos-ta" }
     ],
     emergency: [
-      { fr: "Au secours !", tr: "¡Socorro!", ph: "Sokorro" },
-      { fr: "Police", tr: "Policía", ph: "Polissia" }
+      { fr: "Au secours !", tr: "Aiuto!", ph: "A-you-to" },
+      { fr: "Médecin", tr: "Un medico", ph: "Oun mé-di-ko" }
     ]
+  },
+  "ja": {
+    essentials: [
+      { fr: "Bonjour", tr: "Konnichiwa", ph: "Kon-ni-tchi-wa" },
+      { fr: "Merci", tr: "Arigatō", ph: "A-ri-ga-to" },
+      { fr: "S'il vous plaît", tr: "Onegaishimasu", ph: "O-né-ga-ï-chi-mass" }
+    ],
+    transport: [{ fr: "Où est le taxi ?", tr: "Takushī wa doko?", ph: "Takouchi wa doko" }],
+    food: [{ fr: "L'addition", tr: "O-kaikei", ph: "O-kaï-keï" }],
+    hotel: [{ fr: "Chambre", tr: "Heya", ph: "Hé-ya" }],
+    shopping: [{ fr: "Le prix ?", tr: "Ikura desu ka?", ph: "I-kou-ra dess ka" }],
+    emergency: [{ fr: "Aidez-moi", tr: "Tasukete!", ph: "Ta-sou-ké-té" }]
+  },
+  "pt": {
+    essentials: [
+      { fr: "Bonjour", tr: "Bom dia", ph: "Bon dji-a" },
+      { fr: "Merci", tr: "Obrigado", ph: "O-bri-ga-dou" },
+      { fr: "S'il vous plaît", tr: "Por favor", ph: "Por fa-bor" }
+    ],
+    transport: [{ fr: "Taxi", tr: "Táxi", ph: "Taksi" }],
+    food: [{ fr: "L'addition", tr: "A conta", ph: "A konnt-a" }],
+    hotel: [{ fr: "Chambre", tr: "Quarto", ph: "Kouar-tou" }],
+    shopping: [{ fr: "Combien ?", tr: "Quanto custa?", ph: "Kouan-tou kous-ta" }],
+    emergency: [{ fr: "Au secours", tr: "Socorro!", ph: "Sou-ko-rou" }]
+  },
+  "ar": {
+    essentials: [
+      { fr: "Bonjour", tr: "Marhaba", ph: "Mar-ha-ba" },
+      { fr: "Merci", tr: "Shukran", ph: "Chou-krane" }
+    ],
+    transport: [{ fr: "Taxi", tr: "Taxi", ph: "Taksi" }],
+    food: [{ fr: "L'addition", tr: "Al-hisab", ph: "Al-hi-sab" }],
+    hotel: [{ fr: "Hôtel", tr: "Funduq", ph: "Foun-douk" }],
+    shopping: [{ fr: "Prix", tr: "Al-thaman", ph: "Al-ta-mane" }],
+    emergency: [{ fr: "Aidez-moi", tr: "Sa'iduni", ph: "Sa-i-dou-ni" }]
   }
 };
 
@@ -102,10 +122,10 @@ export default function Triptalk() {
 
   const selectedLang = languages.find(l => l.code === target);
   
-  // Filtrage intelligent
   const filteredData = useMemo(() => {
     if (!target) return {};
-    const langData = survivalData[target] || survivalData["en"];
+    const langData = survivalData[target];
+    if (!langData) return {};
     if (!search) return langData;
 
     const filtered: any = {};
@@ -131,16 +151,12 @@ export default function Triptalk() {
     <main className={`min-h-screen transition-colors duration-500 ${isDark ? 'bg-[#121212] text-white' : 'bg-[#FAF9F6] text-[#2D2D2D]'} p-4 md:p-8 font-sans`}>
       <div className="max-w-md mx-auto">
         
-        {/* Top Control Bar */}
         <div className="flex justify-between items-center mb-8">
             <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-orange-600 animate-pulse" />
-                <span className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Live Survival Kit</span>
+                <div className="w-2 h-2 rounded-full bg-orange-600 animate-pulse" />
+                <span className={`text-[9px] font-black uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Live Survival Kit</span>
             </div>
-            <button 
-                onClick={() => setIsDark(!isDark)}
-                className={`p-2 rounded-xl transition-all ${isDark ? 'bg-slate-800 text-yellow-400' : 'bg-white shadow-sm text-slate-400'}`}
-            >
+            <button onClick={() => setIsDark(!isDark)} className={`p-2 rounded-xl transition-all ${isDark ? 'bg-slate-800 text-yellow-400' : 'bg-white shadow-sm text-slate-400'}`}>
                 {isDark ? '☀️' : '🌙'}
             </button>
         </div>
@@ -153,7 +169,6 @@ export default function Triptalk() {
 
         {!showPlan ? (
           <div className="grid gap-3 animate-in fade-in duration-500">
-            <p className="text-[10px] font-black uppercase text-center mb-4 text-orange-600/60 tracking-[0.4em]">Séléctionnez une destination</p>
             {languages.map((lang) => (
               <button
                 key={lang.code}
@@ -165,32 +180,22 @@ export default function Triptalk() {
                   <p className="text-lg font-bold leading-none">{lang.name}</p>
                   <p className={`text-[9px] font-bold mt-1 uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-400 group-hover:text-slate-500'}`}>{lang.desc}</p>
                 </div>
-                <span className="ml-auto opacity-0 group-hover:opacity-100 transition-all font-black text-xl mr-2">→</span>
               </button>
             ))}
           </div>
         ) : (
           <div className="space-y-4 animate-in slide-in-from-right-4 duration-500">
-            {/* Nav Bar Sticky */}
-            <div className={`sticky top-2 z-30 space-y-4 ${isDark ? 'bg-[#121212]/90' : 'bg-[#FAF9F6]/90'} backdrop-blur-md pb-4`}>
+            <div className={`sticky top-2 z-30 space-y-4 ${isDark ? 'bg-[#121212]/95' : 'bg-[#FAF9F6]/95'} backdrop-blur-md pb-4`}>
                 <div className={`flex items-center justify-between p-3 rounded-2xl border ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-white shadow-sm'}`}>
-                    <button onClick={() => {setShowPlan(false); setSearch("");}} className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-lg transition-colors ${isDark ? 'bg-slate-700 hover:bg-orange-600' : 'bg-[#F5F5F0] hover:bg-orange-600 hover:text-white'}`}>←</button>
+                    <button onClick={() => {setShowPlan(false); setSearch("");}} className="w-10 h-10 flex items-center justify-center bg-[#F5F5F0] dark:bg-slate-700 rounded-xl font-bold">←</button>
                     <div className="flex items-center gap-2">
                         <span className="text-xl">{selectedLang?.flag}</span>
                         <span className="font-black text-[11px] uppercase tracking-widest">{selectedLang?.name}</span>
                     </div>
                     <div className="w-10"></div>
                 </div>
-
-                {/* Search Bar - LA nouveauté */}
                 <div className="relative">
-                    <input 
-                        type="text"
-                        placeholder="Rechercher une phrase..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className={`w-full p-4 pl-12 rounded-2xl text-sm font-bold outline-none transition-all border ${isDark ? 'bg-slate-800 border-slate-700 focus:border-orange-600' : 'bg-white border-slate-100 shadow-sm focus:border-orange-600'}`}
-                    />
+                    <input type="text" placeholder="Rechercher..." value={search} onChange={(e) => setSearch(e.target.value)} className={`w-full p-4 pl-12 rounded-2xl text-sm font-bold outline-none border ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100'}`} />
                     <span className="absolute left-5 top-1/2 -translate-y-1/2 opacity-30">🔍</span>
                 </div>
             </div>
@@ -198,36 +203,24 @@ export default function Triptalk() {
             <div className="space-y-3">
               {categories.map((cat) => (
                 filteredData[cat.id] && (
-                    <div key={cat.id} className={`rounded-[1.8rem] border overflow-hidden shadow-sm transition-all ${isDark ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-slate-100'}`}>
-                        <button 
-                            onClick={() => setOpenCat(openCat === cat.id ? null : cat.id)}
-                            className={`w-full flex items-center justify-between p-5 font-bold transition-all ${openCat === cat.id ? (isDark ? 'bg-orange-600 text-white' : 'bg-[#1A1A1A] text-white') : 'text-slate-500 hover:bg-slate-50'}`}
-                        >
+                    <div key={cat.id} className={`rounded-[1.8rem] border overflow-hidden ${isDark ? 'bg-slate-800/40 border-slate-700' : 'bg-white border-slate-100'}`}>
+                        <button onClick={() => setOpenCat(openCat === cat.id ? null : cat.id)} className={`w-full flex items-center justify-between p-5 font-bold ${openCat === cat.id ? (isDark ? 'bg-orange-600' : 'bg-[#1A1A1A] text-white') : 'text-slate-500'}`}>
                             <div className="flex items-center gap-3">
-                            <span className="text-xl">{cat.icon}</span>
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em]">{cat.label}</span>
+                                <span>{cat.icon}</span>
+                                <span className="text-[10px] font-black uppercase tracking-widest">{cat.label}</span>
                             </div>
-                            <span className="text-xl font-light">{openCat === cat.id ? '−' : '+'}</span>
+                            <span>{openCat === cat.id ? '−' : '+'}</span>
                         </button>
-
                         {openCat === cat.id && (
-                            <div className={`p-3 space-y-2 animate-in slide-in-from-top-2 duration-300 ${isDark ? 'bg-slate-900/50' : 'bg-[#FBFBFA]'}`}>
+                            <div className="p-3 space-y-2">
                             {filteredData[cat.id]?.map((p: any, i: number) => (
-                                <div key={i} className={`p-5 rounded-[1.4rem] border flex items-center justify-between gap-4 transition-all ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-50 hover:border-orange-100 shadow-sm'}`}>
-                                <div className="flex-1">
-                                    <p className={`text-[9px] font-black uppercase mb-2 tracking-wider leading-none ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{p.fr}</p>
-                                    <h4 className={`text-xl font-[900] italic leading-tight mb-3 tracking-tight ${isDark ? 'text-white' : 'text-[#1A1A1A]'}`}>{p.tr}</h4>
-                                    <div className="flex items-center gap-2">
-                                        <span className={`text-[8px] font-black px-2 py-1 rounded-lg uppercase tracking-tighter ${isDark ? 'bg-orange-600/20 text-orange-400' : 'bg-orange-50 text-orange-700'}`}>Prononcer</span>
-                                        <span className={`text-xs font-bold italic ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{p.ph}</span>
+                                <div key={i} className={`p-5 rounded-[1.4rem] border flex items-center justify-between gap-4 ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-50 shadow-sm'}`}>
+                                    <div className="flex-1">
+                                        <p className="text-[9px] font-black uppercase text-slate-400 mb-1">{p.fr}</p>
+                                        <h4 className="text-xl font-[900] italic leading-tight mb-2 tracking-tight">{p.tr}</h4>
+                                        <span className="text-xs font-bold text-orange-600 italic">{p.ph}</span>
                                     </div>
-                                </div>
-                                <button 
-                                    onClick={() => speak(p.tr)} 
-                                    className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center text-xl active:scale-90 transition-all shadow-md ${isDark ? 'bg-orange-600 text-white' : 'bg-[#1A1A1A] text-white hover:bg-orange-600'}`}
-                                >
-                                    🔊
-                                </button>
+                                    <button onClick={() => speak(p.tr)} className="w-11 h-11 bg-orange-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-lg active:scale-90 transition-transform">🔊</button>
                                 </div>
                             ))}
                             </div>
@@ -235,18 +228,9 @@ export default function Triptalk() {
                     </div>
                 )
               ))}
-              
-              {Object.keys(filteredData).length === 0 && (
-                  <div className="py-20 text-center opacity-40 italic">
-                      Aucun résultat pour "{search}"...
-                  </div>
-              )}
             </div>
-
-            <footer className="py-12 text-center">
-              <button onClick={() => {setShowPlan(false); setSearch("");}} className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400 hover:text-orange-600 transition-colors">
-                Terminer le voyage
-              </button>
+            <footer className="py-10 text-center">
+              <button onClick={() => {setShowPlan(false); setSearch("");}} className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-400">Changer de langue</button>
             </footer>
           </div>
         )}
