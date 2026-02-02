@@ -7,19 +7,20 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ error: "Clé API manquante sur Vercel" }), { status: 500 });
     }
 
-    // ON PASSE EN VERSION v1 (STABLE) ET NON v1beta
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // ON CHANGE LE MODÈLE POUR GEMINI-1.0-PRO (Le plus compatible)
+    // ET ON UTILISE LA VERSION v1beta (la plus flexible)
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.0-pro:generateContent?key=${apiKey}`;
 
     const prompt = {
       contents: [{
         parts: [{
-          text: `Act as a travel coach. Create a JSON survival guide for a ${sourceLang} speaker going to a country where they speak ${targetLang}. Trip is in ${time}.
-          Return ONLY this JSON structure:
+          text: `Tu es un guide de voyage. Crée un plan de survie linguistique JSON pour un ${sourceLang} allant vers un pays parlant ${targetLang}. Trip: ${time}.
+          Réponds UNIQUEMENT avec ce JSON strict :
           {
             "planTitle": "Pack de survie : ${targetLang}",
             "days": [
               {
-                "title": "JOUR 1",
+                "title": "JOUR 1 : L'arrivée",
                 "phrases": [
                   { "original": "Bonjour", "translated": "...", "pronunciation": "..." }
                 ]
@@ -39,9 +40,8 @@ export async function POST(req: Request) {
     const data = await response.json();
 
     if (!response.ok) {
-      // Si ça échoue encore, on affiche tout le message de Google
       return new Response(JSON.stringify({ 
-        error: `Google dit: ${data.error?.message || "Erreur inconnue"} (Code: ${data.error?.code})` 
+        error: `Google refuse ce modèle : ${data.error?.message || "Erreur"}` 
       }), { status: 500 });
     }
 
