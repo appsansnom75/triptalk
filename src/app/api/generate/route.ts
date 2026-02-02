@@ -7,16 +7,16 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify({ error: "Clé API manquante sur Vercel" }), { status: 500 });
     }
 
-    // URL Directe Google sans passer par la librairie
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    // ON PASSE EN VERSION v1 (STABLE) ET NON v1beta
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     const prompt = {
       contents: [{
         parts: [{
-          text: `Tu es un coach de voyage. Crée un guide de survie JSON pour un voyageur parlant ${sourceLang} vers ${targetLang} (${time}). 
-          Réponds UNIQUEMENT avec ce format JSON strict :
+          text: `Act as a travel coach. Create a JSON survival guide for a ${sourceLang} speaker going to a country where they speak ${targetLang}. Trip is in ${time}.
+          Return ONLY this JSON structure:
           {
-            "planTitle": "Guide ${targetLang}",
+            "planTitle": "Pack de survie : ${targetLang}",
             "days": [
               {
                 "title": "JOUR 1",
@@ -27,10 +27,7 @@ export async function POST(req: Request) {
             ]
           }`
         }]
-      }],
-      generationConfig: {
-        response_mime_type: "application/json",
-      }
+      }]
     };
 
     const response = await fetch(url, {
@@ -42,10 +39,13 @@ export async function POST(req: Request) {
     const data = await response.json();
 
     if (!response.ok) {
-      return new Response(JSON.stringify({ error: data.error?.message || "Erreur Google" }), { status: 500 });
+      // Si ça échoue encore, on affiche tout le message de Google
+      return new Response(JSON.stringify({ 
+        error: `Google dit: ${data.error?.message || "Erreur inconnue"} (Code: ${data.error?.code})` 
+      }), { status: 500 });
     }
 
-    const text = data.candidates[0].content.parts[0].text;
+    const text = data.candidates[0].content.parts[0].text.replace(/```json/g, "").replace(/```/g, "").trim();
     return new Response(text, {
       status: 200,
       headers: { "Content-Type": "application/json" }
