@@ -1,38 +1,32 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// On s'assure que la clé est bien lue
-const API_KEY = "AIzaSyDD7EyLk-vSXInKE2rkIbbyCCjafuq1kOU";
-const genAI = new GoogleGenerativeAI(API_KEY);
-
 export async function POST(req: Request) {
   try {
     const { sourceLang, targetLang, time } = await req.json();
+    
+    // VERIFICATION 1 : La clé existe-t-elle ?
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: "LA CLÉ GEMINI_API_KEY EST VIDE SUR VERCEL" }), { status: 500 });
+    }
 
-    // Utilisation du modèle flash (le plus rapide et stable)
+    const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
-    const prompt = `Génère un plan de survie pour un voyageur. 
-    Source: ${sourceLang}, Destination: ${targetLang}, Temps: ${time}.
-    Réponds uniquement avec ce JSON :
-    {"planTitle": "Voyage en ${targetLang}", "days": [{"title": "Jour 1", "phrases": [{"original": "Bonjour", "translated": "Hello", "pronunciation": "Hélo"}]}]}`;
+    const prompt = `Crée un guide de survie JSON pour un voyageur parlant ${sourceLang} vers ${targetLang}. 
+    Structure: {"planTitle": "Voyage", "days": [{"title": "J1", "phrases": [{"original": "Salut", "translated": "Hi", "pronunciation": "Hai"}]}]}`;
 
+    // VERIFICATION 2 : L'appel à Google
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    let text = response.text();
-
-    // Nettoyage manuel si l'IA ajoute du texte
-    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    const text = response.text().replace(/```json/g, "").replace(/```/g, "").trim();
 
     return new Response(text, {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });
   } catch (error: any) {
-    // On affiche l'erreur précise dans les logs Vercel
-    console.error("Détail Erreur Google:", error.message);
-    return new Response(JSON.stringify({ error: error.message }), { 
-      status: 500,
-      headers: { "Content-Type": "application/json" }
-    });
+    // On renvoie l'erreur réelle pour la voir dans l'alerte
+    return new Response(JSON.stringify({ error: "ERREUR GOOGLE: " + error.message }), { status: 500 });
   }
 }

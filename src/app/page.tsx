@@ -21,31 +21,42 @@ export default function Triptalk() {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+    const payload = Object.fromEntries(formData);
     
     try {
       const res = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify(payload),
       });
+
       const data = await res.json();
-      setPlan(data);
+
+      if (!res.ok) {
+        // Affiche l'erreur réelle venant du serveur (ex: "Clé invalide")
+        alert(`Détail technique : ${data.error || "Erreur inconnue"}`);
+      } else {
+        setPlan(data);
+      }
     } catch (err) {
-      alert("Petit bug sous les cocotiers... Réessaie !");
+      // Erreur si le dossier /api/ n'est pas trouvé
+      alert("Impossible de joindre le serveur. Vérifie que ton dossier 'api' est bien placé dans 'app'.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const speak = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+    }
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-sky-100 p-6 md:p-12 font-sans selection:bg-orange-200">
       <div className="max-w-xl mx-auto">
         
-        {/* Header Good Vibe */}
         <header className="text-center mb-10 animate-in fade-in zoom-in duration-1000">
           <span className="inline-block px-4 py-1 bg-white/50 backdrop-blur-sm rounded-full text-orange-600 text-xs font-black uppercase tracking-widest mb-4 shadow-sm">
             ☀️ Ready for take off?
@@ -65,7 +76,7 @@ export default function Triptalk() {
                 <select name="sourceLang" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-orange-300 focus:ring-0 shadow-inner text-slate-700 font-bold transition-all appearance-none cursor-pointer">
                   {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
                 </select>
-                <div className="absolute right-5 bottom-5 pointer-events-none text-orange-300">▼</div>
+                <div className="absolute right-5 bottom-5 pointer-events-none text-orange-300 text-xs">▼</div>
               </div>
 
               <div className="relative group">
@@ -73,7 +84,7 @@ export default function Triptalk() {
                 <select name="targetLang" className="w-full p-5 bg-white rounded-2xl border-2 border-transparent focus:border-sky-300 focus:ring-0 shadow-inner text-slate-700 font-bold transition-all appearance-none cursor-pointer">
                   {languages.map(l => <option key={l.code} value={l.code}>{l.name}</option>)}
                 </select>
-                <div className="absolute right-5 bottom-5 pointer-events-none text-sky-300">▼</div>
+                <div className="absolute right-5 bottom-5 pointer-events-none text-sky-300 text-xs">▼</div>
               </div>
 
               <div className="relative group">
@@ -83,7 +94,7 @@ export default function Triptalk() {
                   <option value="1 semaine">📅 Dans 1 semaine</option>
                   <option value="1 mois">⏳ On a le temps</option>
                 </select>
-                <div className="absolute right-5 bottom-5 pointer-events-none text-amber-300">▼</div>
+                <div className="absolute right-5 bottom-5 pointer-events-none text-amber-300 text-xs">▼</div>
               </div>
             </div>
 
@@ -118,7 +129,7 @@ export default function Triptalk() {
                         <div className="flex-1">
                           <p className="font-black text-xl text-slate-800 mb-1">{p.translated}</p>
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 bg-sky-100 text-sky-600 text-[10px] font-black rounded uppercase">Prononcer</span>
+                            <span className="px-2 py-0.5 bg-sky-100 text-sky-600 text-[10px] font-black rounded uppercase tracking-tighter">Prononcer</span>
                             <p className="text-sky-500 font-bold text-sm italic">{p.pronunciation}</p>
                           </div>
                           <p className="text-slate-300 text-xs mt-1 font-medium italic">({p.original})</p>
@@ -126,6 +137,7 @@ export default function Triptalk() {
                         <button 
                           onClick={() => speak(p.translated)} 
                           className="ml-4 bg-orange-100 hover:bg-orange-200 text-orange-600 p-4 rounded-2xl shadow-inner transition-transform active:scale-90"
+                          title="Écouter la prononciation"
                         >
                           <span className="text-2xl">🔊</span>
                         </button>
